@@ -90,6 +90,17 @@ describe('0 Central de Atendimento ao Cliente TAT', function() {
         cy.get('.success').should('be.visible')
     })
     
+    //Aulas e Exercicios 3
+
+    it.only('Seleciona um produto (Youtube) por seu texto',function() {
+        cy.get('#product')
+            .select('YouTube')
+            .should('have.value', 'youtube')
+    })
+
+    it('',function() {
+        
+    })
 
 
   })
