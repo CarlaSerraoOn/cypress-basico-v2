@@ -112,13 +112,62 @@ describe('0 Central de Atendimento ao Cliente TAT', function() {
 
     //Exercicios da aula 4
 
-    it.only('Marca o tipo de atendimento "Feedback"',function() {
-        cy.get('')
+    it('Marca o tipo de atendimento "Feedback"',function() {
+        cy.get('input[type="radio"][value="feedback"]')
+            .check()
+            .should('have.value', 'feedback')
     })
 
-    it('',function() {
-        
+    it('Marca cada tipo de atendimento',function() {
+        cy.get('input[type="radio"]')
+            .should('have.length', 3)
+            .each(function($radio) {
+                cy.wrap($radio).check()
+                cy.wrap($radio).should('be.checked')
+            })
     })
+
+     //Exercicios da aula 5
+
+     it('Marca ambos checkboxes, depois desmarcar o último', function() {
+        cy.get('input[type="checkbox"]')
+            .check()
+            .should('be.checked')
+            .last()
+            .uncheck()
+            .should('not.be.checked')
+     })
+
+     it('Exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário', function() {
+        cy.get('#firstName').type('Carla')
+        cy.get('#lastName').type('Oliveira')
+        cy.get('#email').type('carla.suporteam@gmail.com')
+        cy.get('#phone-checkbox').check()
+        cy.get('#open-text-area').type('teste')
+        cy.contains('button', 'Enviar').click()
+
+        cy.get('.error').should('be.visible')
+     })
+
+     //Exercicios Aula 6
+
+     it('Seleciona um arquivo da pasta fixture', function() {
+        cy.get('input[type="file"]')
+            .should('not.have.value')
+            .selectFile('./cypress/fixtures/example.json')
+            .should(function($input) {
+                expect($input[0].files[0].name).to.equal('example.json')
+            })
+     })
+
+     it.only('Seleciona um arquivo simulando um drag-and-drop', function() {
+        cy.get('input[type="file"]')
+        .should('not.have.value')
+        .selectFile('./cypress/fixtures/example.json', { action: 'drag-drop'} )
+        .should(function($input) {
+            expect($input[0].files[0].name).to.equal('example.json')
+        })
+     })
 
   })
   
