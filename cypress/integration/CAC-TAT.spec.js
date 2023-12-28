@@ -92,16 +92,33 @@ describe('0 Central de Atendimento ao Cliente TAT', function() {
     
     //Aulas e Exercicios 3
 
-    it.only('Seleciona um produto (Youtube) por seu texto',function() {
+    it('Seleciona um produto (Youtube) por seu texto',function() {
         cy.get('#product')
             .select('YouTube')
             .should('have.value', 'youtube')
     })
 
+    it('Seleciona um produto (Mentoria) por seu valor (Value)',function() {
+        cy.get('#product')
+            .select('mentoria')
+            .should('have.value' , 'mentoria')
+    })
+
+    it('Seleciona um produto (Blog) por seu indice',function() {
+        cy.get('#product')
+            .select(1)
+            .should('have.value', 'blog')
+    })
+
+    //Exercicios da aula 4
+
+    it.only('Marca o tipo de atendimento "Feedback"',function() {
+        cy.get('')
+    })
+
     it('',function() {
         
     })
-
 
   })
   
