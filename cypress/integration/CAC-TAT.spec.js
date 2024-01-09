@@ -1,6 +1,7 @@
 /// <reference types="Cypress" />
 
 describe('0 Central de Atendimento ao Cliente TAT', function() {
+    const THREE_SECONDS_IN_MS = 3000
     beforeEach(function() {
         cy.visit('./src/index.html') 
     })
@@ -10,6 +11,9 @@ describe('0 Central de Atendimento ao Cliente TAT', function() {
 
     it('1 Preencha os campos obrigatórios e envia o formulário' , function() {
         const longText = 'Teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste.'
+
+        cy.clock()
+
          cy.get('#firstName').type('Carla')
          cy.get('#lastName').type('Oliveira')
          cy.get('#email').type('carla.suporteam@gmail.com')
@@ -17,9 +21,15 @@ describe('0 Central de Atendimento ao Cliente TAT', function() {
          cy.contains('button', 'Enviar').click()
 
          cy.get('.success').should('be.visible')
+
+         cy.tick(THREE_SECONDS_IN_MS)
+
+         cy.get('.success').should('not.be.visible')
     })
 
     it('2 Exibe mensagem de erro ao submeter o formulário com um email com formatação inválida' , function() {
+        cy.clock()
+
         cy.get('#firstName').type('Carla')
         cy.get('#lastName').type('Oliveira')
         cy.get('#email').type('carla.suporteam@gmail,com')
@@ -27,6 +37,10 @@ describe('0 Central de Atendimento ao Cliente TAT', function() {
         cy.contains('button', 'Enviar').click()
 
         cy.get('.error').should('be.visible')
+
+        cy.tick(THREE_SECONDS_IN_MS)
+
+        cy.get('.error').should('not.be.visible')
     })
 
     it('3 Campo telefone continua vazio quando preenchido com valor não-numérico', function() {
@@ -36,6 +50,8 @@ describe('0 Central de Atendimento ao Cliente TAT', function() {
     })
 
     it('4 Exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário', function() {
+        cy.clock()
+
         cy.get('#firstName').type('Carla')
         cy.get('#lastName').type('Oliveira')
         cy.get('#email').type('carla.suporteam@gmail.com')
@@ -44,6 +60,10 @@ describe('0 Central de Atendimento ao Cliente TAT', function() {
         cy.contains('button', 'Enviar').click()
 
         cy.get('.error').should('be.visible')
+
+        cy.tick(THREE_SECONDS_IN_MS)
+
+        cy.get('.error').should('not.be.visible')
     })
 
     it('5 Preenche e limpa os campos nome, sobrenome, email e telefone', function() {
@@ -79,15 +99,28 @@ describe('0 Central de Atendimento ao Cliente TAT', function() {
     })
 
     it('6 Exibe mensagem de erro ao submeter o formulário sem preencher os campos obrigatórios', function() {
+        cy.clock()
+
         cy.contains('button', 'Enviar').click()
 
         cy.get('.error').should('be.visible')
+
+        cy.tick(THREE_SECONDS_IN_MS)
+
+        cy.get('.error').should('not.be.visible')
     })
 
     it('7 Envia o formulário com sucesso usando o comando customizado', function() {
+        cy.clock()
+
         cy.fillMandatoryFieldsAndSubmit()
 
         cy.get('.success').should('be.visible')
+
+        cy.tick(THREE_SECONDS_IN_MS)
+
+        cy.get('.success').should('not.be.visible')
+
     })
     
     //Aulas e Exercicios 3
@@ -139,6 +172,8 @@ describe('0 Central de Atendimento ao Cliente TAT', function() {
      })
 
      it('Exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário', function() {
+        cy.clock()
+
         cy.get('#firstName').type('Carla')
         cy.get('#lastName').type('Oliveira')
         cy.get('#email').type('carla.suporteam@gmail.com')
@@ -147,6 +182,10 @@ describe('0 Central de Atendimento ao Cliente TAT', function() {
         cy.contains('button', 'Enviar').click()
 
         cy.get('.error').should('be.visible')
+
+        cy.tick(THREE_SECONDS_IN_MS)
+
+        cy.get('.error').should('not.be.visible')
      })
 
      //Exercicios Aula 6
@@ -189,6 +228,5 @@ describe('0 Central de Atendimento ao Cliente TAT', function() {
 
         cy.contains('Talking About Testing').should('be.visible')
     })
-
 })
   
